@@ -1,0 +1,156 @@
+\documentclass[]{report}
+\usepackage[hmargin=1.25in,vmargin=1in]{geometry} %调整页边距
+% \usepackage[inner=1in,outer=1.25in]{geometry} %书籍左右不等宽排版
+\usepackage[utf8]{inputenc}
+\usepackage[]{ctex} %据说可以直接调用诸如 \kaishu \fangsong \heiti 的命令修改字体
+\usepackage[svgnames]{xcolor} % Using colors
+% \usepackage{background} % To include background images
+\usepackage{fancyhdr} % Needed to define custom headers/footers
+\usepackage[]{xeCJK}
+\setCJKmainfont[BoldFont = STHeiti, ItalicFont = STKaiti]{Songti SC Light} %中文主字体
+\setCJKsansfont[BoldFont = Weibei SC, ItalicFont = HanziPen SC]{Xingkai SC Light} %中文无衬线字体
+\setCJKmonofont[BoldFont = Libian SC, ItalicFont = STFangsong]{Yuanti SC Light} %中文等宽字体
+\setmainfont{Times New Roman} %\rmfamily
+\setsansfont[ItalicFont = American Typewriter]{Comic Sans MS} %\sffamily
+\setmonofont{Courier} %\ttfamily
+\newfontfamily\monaco{Courier} % 用于代码段字体设置
+\newfontfamily\OldCaption{Bodoni 72 Smallcaps Book} %用于全大写字母的标题
+\usepackage{titlesec}
+% 一下为适用于笔记/整理的板式（第几章-第几节）
+% \titleformat{\chapter}{\centering\huge\bfseries}{第~\thechapter~章}{1em}{}
+% \titleformat{\section}{\Large\bfseries}{第~\thesection~节}{1em}{}
+% 一下为适用于作业的板式（第几次-第几题-abcd问）
+\titleformat{\chapter}{\centering\huge\bfseries}{第~\thechapter~次作业}{1em}{}
+\titleformat{\section}{\Large\bfseries}{第~\thesection~题}{1em}{}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+\usepackage{lipsum} %填充文本
+
+\usepackage{ulem} %解决下划线、删除线之类的
+\usepackage{listings}
+\lstset{
+language=C++,
+numberstyle = \monaco,
+basicstyle = \monaco,
+keywordstyle = \color{blue}\bfseries,
+commentstyle=\color[HTML]{006400},
+tabsize = 4,
+%backgroundcolor=\color{bg}
+emph = {int,float,double,char},emphstyle=\color{cyan},
+emph = {[2]const, typedef},emphstyle = {[2]\color{red}} }
+
+\makeatletter
+\newif\if@restonecol
+\makeatother
+\let\algorithm\relax
+\let\endalgorithm\relax
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}%[ruled,vlined]{
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm
+
+\usepackage{amsmath} %数学公式问题
+\usepackage{amsthm} %公式环境，如proof
+\usepackage{booktabs} %三线表
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}} %解决单元格内部换行的问题
+% 比如这个 Beijing & 0,5 & 1,6 & 2,7 & 3,8 & 4,9 & The number changes every 3 months \\
+% 改成这个 \tabincell{l}{Beijing}& \tabincell{c}{0,5}& \tabincell{c}{1,6}& \tabincell{c}{2,7}& \tabincell{c}{3,8}& \tabincell{c}{4,9}& \tabincell{c}{The number changes \\ every 3 months} \\
+% 一个单元格过长，整行都需要修改
+% 可以配合 \resizebox*{h-width}{v-width}{contents, e.g.tabular} 使用
+
+\usepackage{mathrsfs} %在公式里面使用那个最花的字体
+\usepackage{amssymb} %公式里面用空心黑体和旧式字体
+\usepackage{amssymb} %AMS符号
+\usepackage{amsthm} %AMS定理环境
+
+\usepackage{markdown} %使用markdown语法，在编译时需要打开 shell-escape 标记，即 $ xelatex --shell-escape example.tex
+\markdownSetup{hashEnumerators = true} %允许使用 #. 的方式编写有序列表
+\markdownSetup{inlineFootnotes = true} %允许使用脚注形式的超链接，调用语法为 [anchor](uri), ^[footnote], <uri>
+\markdownSetup{fencedCode = true} %以反引号和缩进来插入代码段，相当于 verbatim
+\markdownSetup{
+  pipeTables = true
+} %支持表格的用法 (图片已经在markdown包里面支持了)
+% \usepackage{booktabs} %解决三线表的线条粗细问题
+
+\usepackage{graphicx} %插入图片
+\usepackage{pdfpages} %插入PDF文件
+\usepackage{makeidx}
+
+\usepackage{tikz} %带圈字符
+\usepackage{etoolbox} %带圈字符 (提供robustify)
+\usepackage{enumitem}
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt)%
+    circle (.5em) node {\makebox[1em][c]{\small #1}};}} %新定义命令：带圈字符
+\robustify{\circled}
+% \usepackage{enumerate} %有序列表
+
+\usepackage{hyperref} %超链接
+% \usepackage[hidelinks]{hyperref} %隐藏超链接的红框
+\markdownSetup{
+  inlineFootnotes = true,
+  renderers = {
+    link = {\href{#3}{#1}},
+  }
+} % markdown块中使用直接点进去的超链接
+% \setlist[enumerate,1]{label=(\arabic*).,font=\textup,leftmargin=7mm,labelsep=1.5mm,topsep=0mm,itemsep=-0.8mm}
+% \setlist[enumerate,2]{label=(\alph*).,font=\textup,leftmargin=7mm,labelsep=1.5mm,topsep=-0.8mm,itemsep=-0.8mm}
+
+\usepackage{braket}
+
+%%%%%% Setting up the style
+
+% \setlength\parindent{0pt} % Gets rid of all indentation
+% \backgroundsetup{contents={\includegraphics[width=\textwidth]{ustc-name.pdf}},scale=0.4,placement=top,opacity=0.6,color=cyan,vshift=-20pt} %  USTC Logo
+
+\pagestyle{fancy} % Enables the custom headers/footers
+
+% 使用默认的Chapter页眉
+% \lhead{} \rhead{} % Headers - all  empty
+
+% \title{\vspace{-1.8cm}  \color{DarkRed} Laboratory Rotation Report}
+% \subtitle{Title of the proposal % Title of the rotation project
+% \vspace{-2cm} }
+% \date{\today} % No date
+
+\lfoot{\color{Grey} \textit{艾语晨}}  % Write your name here
+\rfoot{ \color{Grey} 算法基础 }
+\cfoot{\color{Grey} \thepage}
+
+\renewcommand{\headrulewidth}{0.0pt} % No header rule
+\renewcommand{\footrulewidth}{0.4pt} % Thin footer rule
+
+\title{算法基础第二次作业}
+\author{艾语晨}
+\date{\today}
+
+\linespread{1.3} %行间距为1.3倍默认间距 (1.3 x 1.2倍字符宽度)
+
+\makeindex
+
+\begin{document}
+\theoremstyle{definition} \newtheorem{theorem}{Thm}[section] %定义一个定理Thm，序号为section的下一级序号
+\theoremstyle{definition} \newtheorem{definition}{Def}[section] %定义一个定义Def，序号为section的下一级序号
+\theoremstyle{plain} \newtheorem{lemma}{lemma}[section] %引理
+
+	\maketitle
+	\newpage
+
+	\tableofcontents
+	\newpage
+
+	\chapter{算法基础第二次作业}
+	\section{堆排序}
+		\textbf{不妨设最终要求升序排列。}那么需要构建一个最大堆。对于一组升序排列的数据，{\OldCaption{Build-Max-Heap}}过程的时间复杂度为$O(n)$，而每一次调用{\OldCaption{Max-Heapify}}的时间为$O(\lg n)$，共调用$n-1$次，故时间复杂度为$O(n\lg n)$。\par
+		对于一组降序排列的数据，{\OldCaption{Build-Max-Heap}}过程的时间复杂度为$O(n)$，而每一次调用{\OldCaption{Max-Heapify}}的时间为$O(\lg n)$，共调用$n-1$次，故时间复杂度为$O(n\lg n)$。
+	\section{快速排序}
+		快速排序的时间复杂度递归式为：\[T(n)=T((1-\alpha)n)+T(\alpha n)+cn\]
+		\subsection{递归深度}
+		\begin{proof}
+			叶节点的最小深度在所有层选择均为$T(\alpha n)$分支时得到，设深度为$x_{\min}$，则有$\alpha^{x_{\min}}n=1$，故$x_{\min}=-\log_{\alpha}n=-\lg n/\lg\alpha$。最大深度在所有层的选择均为$T((1-\alpha)n)$分支时取到，设深度为$x_{\max}$，则有$(1-\alpha)^{x_{\max}}n=1$，故$x_{\max}=-\log_{\alpha}n=-\lg n/\lg(1-\alpha)$
+		\end{proof}
+		\subsection{更平衡的概率}
+		\begin{proof}
+			设新的划分为$1-x:x$，则它的{\OldCaption{Partition}}产生比$1-\alpha:\alpha$更平衡等价于$|\frac{1}{2}-x|<\frac{1}{2}-\alpha$，即$\alpha<x<1-\alpha$，即概率为$1-2\alpha$
+		\end{proof}
+
+\end{document}
