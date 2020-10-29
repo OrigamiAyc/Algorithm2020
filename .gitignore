@@ -6,7 +6,7 @@
 *.ind
 *.log
 *.out
-*.syntex.gz
+*.synctex.gz
 *.toc
 *.xdv
 *.DS_Store
