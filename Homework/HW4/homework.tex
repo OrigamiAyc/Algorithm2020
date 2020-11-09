@@ -168,9 +168,23 @@ emph = {[2]const, typedef},emphstyle = {[2]\color{red}} }
 			\end{minipage}
 		\end{figure}
 
+
+		\section{最大重叠点}
+		\subsection{一定有一个是端点}
+		不妨设点p是一个最大重叠点，由最大重叠点点定义可知，这样的点一定存在。只要没有将p移动到超过某一个区间到边界（低端点或者高端点），就将p向正方向移动。故在此情形下，最终一定会到达某一个区间的端点。这时候就会得到一个是某个区间端点的最大重叠点
+		\subsection{红黑树的扩增}
+		使红黑树记录所有的端点，并额外维护一个域，用于区分左端点和右端点。左端点记为+1，右端点记为-1，并且给树中的每个结点扩张一个额外信息，维护比这个节点的值小的所有节点，为左端点的个数减去右端点的个数，即为这个结点的涵盖区间数\par
+		\paragraph{操作1}INTERVAL-INSERT\par
+		对两个端点分别调用红黑树的插入算法，并更新各自路径上的结点（最大重叠点信息）
+		\paragraph{操作2}INTERVAL-DELETE\par
+		按照红黑树的删除算法分别删除两个左右端点，并更新各自路径上的结点
+		\paragraph{操作3}FIND-POM\par
+		遍历树上的所有节点，涵盖区间数最大的点即为所求最大重叠点
+
 		\section{Pisano}
 		\subsection{这个假设有问题}
 		这一步的时间复杂度实际上是$O(D[x])$的而非$O(1)$的，这是因为对于x的每一个子节点，都需要至少做一个将其$.p$指针从x更改置为NIL
-		\subsection{}
+		\subsection{时间复杂度上界}
+		第$5\sim7$行（主要为CASCADING-CUT函数）的时间复杂度为$O(c)$，而第8行第调用次数由x的度数$x.degree$决定，故总的时间复杂度为$O(c+x.degree)$
 
 \end{document}
