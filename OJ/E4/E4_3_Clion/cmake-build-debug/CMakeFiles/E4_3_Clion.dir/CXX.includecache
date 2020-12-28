@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/lapland/GitHub/Algorithm2020/OJ/Dec_13/E4_3_Clion/main.cpp
+iostream
+-
+vector
+-
+cstring
+-
+algorithm
+-
+
