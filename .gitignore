@@ -10,3 +10,6 @@
 *.toc
 *.xdv
 *.DS_Store
+*.idea
+cmake-build-debug
+E4_3.dSYM
